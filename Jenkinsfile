@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    tools {
+        maven 'Maven'   // Must match Jenkins tool name
+    }
+
     stages {
 
         stage('Clone') {
@@ -21,16 +25,19 @@ pipeline {
             }
         }
 
-        stage('Docker Build') {
+        stage('Run Application') {
             steps {
-                bat 'docker build -t notes-app .'
+                bat 'java -cp target/notes-app-1.0.jar NotesController'
             }
         }
+    }
 
-        stage('Run Container') {
-            steps {
-                bat 'docker run -d -p 8080:8080 notes-app'
-            }
+    post {
+        success {
+            echo '✅ Build and Test Successful!'
+        }
+        failure {
+            echo '❌ Build Failed!'
         }
     }
 }
