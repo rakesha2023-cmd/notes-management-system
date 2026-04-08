@@ -5,7 +5,7 @@ pipeline {
 
         stage('Clone') {
             steps {
-                git 'https://github.com/rakesha2023-cmd/notes-management-system.git'
+                git branch: 'main', url: 'https://github.com/rakesha2023-cmd/notes-management-system.git'
             }
         }
 
